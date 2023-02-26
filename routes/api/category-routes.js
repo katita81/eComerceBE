@@ -39,15 +39,12 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // create a new category
-  router.post('/', async (req, res) => {
-    try {
-      const categoryData = await Category.create(req.body);
-      res.status(200).json(categoryData);
-    } catch (err) {
-      res.status(400).json(err);
-    }
-  });
+  try {
+    const categoryData = await Category.create(req.body);
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 router.put('/:id', (req, res) => {
@@ -64,7 +61,11 @@ router.put('/:id', (req, res) => {
       },
     }
   )
-    .then((updated) => {
+    .then((category) => {
+      // find all associated tags from ProductTag
+      return Category.findAll({ where: { category_id: req.params.id } });
+    })
+    .then((updatedCategory) => {
       res.json(updatedCategory);
     })
     .catch((err) => {
