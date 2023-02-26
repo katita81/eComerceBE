@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// Create a new category
 router.post('/', async (req, res) => {
   try {
     const categoryData = await Category.create(req.body);
@@ -57,16 +57,13 @@ router.put('/:id', (req, res) => {
     {
       // Gets a category based on the category_id given in the request parameters
       where: {
-        category_id: req.params.category_id,
+        id: req.params.id,
       },
     }
   )
-    .then((category) => {
-      // find all associated tags from ProductTag
-      return Category.findAll({ where: { category_id: req.params.id } });
-    })
-    .then((updatedCategory) => {
-      res.json(updatedCategory);
+    .then((result) => {
+      console.log(result)
+      res.json(result)
     })
     .catch((err) => {
       console.log(err);
@@ -78,7 +75,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', async(req, res) => {
   // delete a category by its `id` value
   try {
-    const categoryData = await Location.destroy({
+    const categoryData = await Category.destroy({
       where: {
         id: req.params.id
       }
