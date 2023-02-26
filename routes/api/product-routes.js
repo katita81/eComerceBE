@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // create new product
-router.post('/',async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const productData = await Product.create({
       reader_id: req.body.reader_id,
