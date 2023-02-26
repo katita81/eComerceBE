@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findAll({
-      include: [{model: Product}, {model: Tag }],
+      include: [{model: Product}],
       
     });
     res.status(200).json(categoryData);
@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
   // create a new category
   router.post('/', async (req, res) => {
     try {
-      const categoryData = await Location.create(req.body);
+      const categoryData = await Category.create(req.body);
       res.status(200).json(categoryData);
     } catch (err) {
       res.status(400).json(err);
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Book.update(
+  Category.update(
     {
       // All the fields you can update and the data attached to the request body.
       category_name: req.body.category_name
