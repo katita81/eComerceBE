@@ -40,10 +40,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new tag
   try {
-    const tagData = await Tag.create({
-      tag_id: req.body.tag_id,
-    });
-    res.status(200).json(tagData);
+    const tagData = await Tag.create(req.body);
+      
+      res.status(200).json(tagData);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -59,12 +58,12 @@ router.put('/:id', (req, res) => {
     {
       // Gets a category based on the category_id given in the request parameters
       where: {
-        tag_id: req.params.tag_id,
+        id: req.params.id,
       },
     }
   )
-    .then((updated) => {
-      res.json(updatedTag);
+    .then((result) => {
+      res.json(result);
     })
     .catch((err) => {
       console.log(err);
